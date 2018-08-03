@@ -1,0 +1,54 @@
+//c++对象模型 菱形虚拟继承- 虚函数表-虚基表 等问题
+
+#include<iostream>
+using namespace std;
+class A
+{
+public:
+	virtual void fun1()
+	{}
+	int _a;
+};
+
+class B:virtual public A
+{
+public:
+	virtual void fun1()
+	{}
+	virtual void fun2()
+	{}
+	int _b;
+};
+
+class C:virtual public A
+{
+public:
+	virtual void fun1()
+	{}
+	virtual void fun2()
+	{}
+	int _c;
+};
+
+class D :public B, public C
+{
+public:
+	virtual void fun1()
+	{}
+	virtual void fun2()
+	{}
+	int _d;
+};
+
+int main(){
+	
+	D dd;
+	dd.B::_a = 1;
+	dd.C::_a = 2;
+	dd._b = 3;
+	dd._c = 4;
+	dd._d = 5;
+
+	system("pause");
+	return 0;
+}
