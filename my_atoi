@@ -1,0 +1,79 @@
+//atoi函数的简单实现
+//函数用途：将字符串转为整形
+//函数原型 int atoi(const char* str)
+//遇到非数字或字符串结束符('\0')才结束转换，并将结果返回。
+
+#include<iostream>
+using namespace std;
+//考虑溢出 如果转化数字超过int范围 
+//int占用4字节，32比特，数据范围为-2147483648~2147483647[-2^31~2^31-1]
+//#define INT_MAX ((int)0x7fffffff)
+//#define INT_MIN ((int)0x80000000)
+//C语言在limits.h中包含了极大和极小的整数值，也可以直接调用  INT_MAX INT_MIN。
+
+
+int my_atoi(const char*str)
+{
+    int tmp = 0;
+    //int i=0;
+    //当字符串为NULL时
+    if (*str == NULL)
+    {
+        return NULL;
+    }
+    //跳过空格   isspace()这个函数在type.h头文件中；也可以s[i]==' '实现
+    while (*str == ' '){
+        str++;
+    }
+    //for (i; isspace(str[i]); i++)
+    //{}
+    //判断并且跳过符号位
+    int s = (*str == '-') ? -1 : 1;
+    //int s=1;
+    //if(*str=='-'||*str=='+')
+    //{
+        //if (*str == '-')
+            //s = -1;
+        //str++;
+    //}
+    if (*str == '+' || *str == '-'){
+        str++;
+    }
+    //剩下只有字符和数字的情况  将数字字符转换成整形数字，isdigit()这个函数在type.h头文件中；
+    //也可以s[i]>='0' && s[i]<='9''实现; 0x30是 '0'
+    while (*str>='0'&&*str<='9')  //while(isdigit(str[i]))
+    {
+        tmp = tmp * 10 + (*str - '0');
+
+        //if (s=1)
+        //{
+            //if (tmp > INT_MAX)  正溢出
+                //return 0;
+        //}
+        //else
+        //{
+            //if (-tmp < INT_MIN) 负溢出
+                //return 0;
+        //}
+        str++;
+    }
+    return tmp*s;
+}
+
+void test()
+{
+    char* str1 = " -1234";
+    cout << my_atoi(str1) << endl;
+    char* str2 = "  12aaaa";
+    cout << my_atoi(str2) << endl;
+    char*str3 = "8888888888888";
+    cout << my_atoi(str3) << endl;
+}
+
+
+int main()
+{
+    test();
+    system("pause");
+    return 0;
+}
