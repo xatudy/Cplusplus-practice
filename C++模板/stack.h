@@ -3,7 +3,8 @@
 
 #include"Vector.h"
 #include"List.h"
-//ÊÊÅäÆ÷Ä£Ê½  ÄÃÒ»¸ö¶«Î÷ÊÊÅä³öÎÒÏëÒªµÄ¶«Î÷
+//é€‚é…å™¨æ¨¡å¼  æ‹¿ä¸€ä¸ªä¸œè¥¿é€‚é…å‡ºæˆ‘æƒ³è¦çš„ä¸œè¥¿
+//æ ˆçš„é€‚é…å™¨
 template<class T,class Container>
 class Stack{
 public:
