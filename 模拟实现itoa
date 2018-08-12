@@ -1,0 +1,52 @@
+#include<iostream>
+using namespace std;
+
+char* my_itoa(int value, char* string, int base)
+{
+    //value：欲转换的数据。
+    //string：目标字符串的地址。
+    //base：转换后的进制数，可以是10进制、16进制等。
+    //2<=base<=32 当base(数字基)等于1时，itoa会崩溃
+    //base(数字基)大于32时，依旧能得到相应进制而转化的字符串，
+    //只是传化出来的字符不可见而已
+    int va = value;
+    int tmp = 1;
+    char* str = string;
+    if (va == 0)
+    {
+        *str++ = '0';
+        *str = '\0';
+        return string;
+    }
+    if (base<2 || base>32){
+        *str = '\0';
+        return string;
+    }
+
+    stack<char> cmd; //存入栈时是逆序 出栈时是顺序
+    while (tmp){
+        tmp = va / base;
+        int a = va % base;
+        if (a < 10){
+            cmd.push(a + '0');
+        }
+        else
+        {
+            cmd.push(a - 10 + 'a');//跳过大写字母
+        }
+        va = tmp;
+    }
+    while (!cmd.empty()){
+        *str++ = cmd.top();
+        cmd.pop();
+    }
+    *str = '\0';
+    return string;
+}
+
+int main(){
+    char string[1024];
+    cout << my_itoa(123,string, 16) << endl;
+    system("pause");
+    return 0;
+}
