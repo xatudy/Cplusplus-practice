@@ -1,0 +1,36 @@
+```
+//思路：这里我们需要两个栈s1 s2 一个正常存入数据一个只存入小的数据
+//就比如说 第一个数据先入两个栈  然后插入第二个数据时 先和s2的栈顶数据
+//比较 如果小的话就分别插入到s1 s2中 如果大的话就只插到s1中
+#include<iostream>
+#include<stack>
+using namespace std;
+
+class minStack{
+public:
+  minStack();
+  push(int data)
+  {
+    s1.push(data);   //当data 小于等于s2栈顶的数据时 插入
+    if(s2.empty()||s2.top()<=data)
+    {
+       s2.push(data);
+    }
+  } 
+  pop(){
+    if(s1.top()==s2.top())
+         s2.pop();
+
+    s1.pop();
+  }
+  int min()
+  {
+      if(s2.empty()!=NULL)
+        return s2.top();
+  }
+  ~minStack();
+ 
+private:
+ stack s1;
+ stack s2;
+};
