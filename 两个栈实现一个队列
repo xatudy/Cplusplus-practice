@@ -1,0 +1,43 @@
+```
+//队列的特点 先进先出  而栈的特点是后进先出  要让两个栈实现一个队列的话
+//我们可以这样搞  先将数据全都 存储的栈s1中  比如顺序是 1 2 3 4 5 要让先入栈的
+//1先出去 这时我们可以将s1中的数据一次pop 然后存入 s2中 这时s2中的顺序就
+//变成5 4 3 2 1 然后在pop掉s2中的数据这样出来刚符合先进先出的特性
+//pop时我可以先看s2是否为空 不为空直接pop 为空将s1中的数据存进来然后在pop
+
+#include<iostram>
+#include<stack>
+using namespace std;
+
+class Twostack{
+
+public:
+  Twostack();
+  ~Twostack();
+
+  void Push(const int& x)
+  {
+     s1.push(x);
+  }  
+   void Pop()
+   {
+     if(s2.empty()!=NULL)
+     {
+       cout<<s2.top()<<" ";
+       s2.pop();
+     }else{
+       while(!s1.empty())
+       {
+        s2.push(s1.top());
+        s1.pop();
+       }
+       cout<<s2.top()<<" ";
+       s2.pop();
+     }
+   }
+ 
+private:
+ stack<int> s1;
+ stack<int> s2;
+};
+```
