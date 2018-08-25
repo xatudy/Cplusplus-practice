@@ -1,0 +1,62 @@
+```
+//栈特点：后进先出 先进后出 而队列是先进先出所以想要用队列实现栈我么可以这样搞
+//来两个队列 q1 q2 先将数据全部push到q1中  然后将q1中前n-1个数据pop掉然后push到q2中
+//然后pop掉q1的最后一个数据就好 然后在q2实行上面步骤依次循环直到数据全部pop掉为止
+
+#include<iostream>
+#include<queue>
+using namespace std;
+
+class Twoqueue{
+public:
+   Twoqueue();
+   ~Twoqueue();
+   void push(const int& x)
+   {
+    if(q1.empty()&&q2.empty())
+     {
+        q1.push(x);
+     }else if(!q1.empty())
+     {
+        q1.push(x);
+     }else if(!q2.empty())
+     {
+       q2.push(x);
+     }
+   }
+void pop()
+{
+  if(!q1.empty())
+    {
+       while(q1.size()>1)
+       {
+         q2.push(q1.front());
+         q1.pop();
+       }
+       q1.pop();
+    }else if(!q2.empty()) 
+    {
+     while(q2.size()>1)
+     {
+      q1.push(q2.front());
+      q2.pop();
+     }
+     q2.pop();
+    }  
+ }
+
+int & Top() 
+{
+  if(!q1.empty())
+     return q1.back();
+   if(!q2.empty())
+     return q2.back();
+}
+  
+
+private:
+  queue<int> q1;
+  queue<int> q2;
+};
+
+```
