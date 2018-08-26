@@ -1,0 +1,109 @@
+//简单思路  先创建一个数组  栈s1从数组的头部到尾开始存储数据 
+//栈s2从数组的尾到头开始存储数据  当两个栈的栈顶指针相遇时开始进行增容
+
+#include<iostream>
+using namespace std;
+
+
+class Twostack
+{
+public:
+    Twostack()
+       :_array(NULL)
+       ,_size1(0)
+       ,_size2(0)
+       ,_capacity(0)
+    {}
+    ~Twostack()
+    {
+      if(_array!=NULL)
+      {
+         delete [] _array;
+         _array=NULL;
+         _size1=0;
+         _size2=0;
+         _capacity=0;
+      }
+    }
+void push1(const int & x)
+{
+   checkcapacity();
+   _array[_size1++]=x;
+}
+void push2(const int& x)
+{
+  checkcapacity();
+  _array[_size2--]=x;
+}
+void pop1()
+{
+  if(_size1==0)
+    return ;
+  if(_size1>0)
+    --_size1;
+}
+
+void pop2()
+{
+   if(_size2<_capacity-1)
+       _size2++;
+}
+int & Top1()
+{
+  if(Size1()==0)
+    return 0;
+   if(Size1()>0)
+     return _array[_size-1];
+}
+int & Top2()
+{
+  if(Size2()==0)
+    return 0;
+    if(Size2()>0)
+     return _array[_size+1];
+}
+size_t Size1()
+{ 
+  return _size;
+}
+size_t Size2()
+{
+ return _capacity-1-_size2;
+}
+
+void checkcapacity()
+{
+    if(_array==NULL)
+     {
+        _capacity+=3;
+        _array=new int[_capacity];
+        _size2=_capacity-1;
+        return ;
+     }
+     if(_szie1==_size2)
+     {
+        int _newcapacity=_capacity*2;
+        int *tmp=new int[_newcapacity];
+        //拷贝s1;
+        for(int i=0;i<_size1;i++)
+        {
+           tmp[i]=_array[i];
+        }
+        //拷贝s2;
+
+        for(int j=_newcapacity-1,i=_capacity-1;i>_size2;j--,i--)
+        {
+           tmp[j]=_array[i];
+        }
+        delete[] _array;
+        _array=tmp;
+        _capacity=_newcapacity;
+        _size2=_newcapacity-(capacity-_size2);
+     }
+}
+private:
+   int _size1;//stack1的下标
+   int _size2;
+   int _capacity;
+   int* _array;
+};
