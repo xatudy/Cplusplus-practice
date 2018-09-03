@@ -1,0 +1,64 @@
+TOPK问题的注意要点:
+
+
+1.这里你找的是最大的前K个玩家，所以我们需要建一个容量为K的小堆.(为什么建小堆？  如果建大堆，最后你拿到的只有那个最大的数据)
+
+
+2.现在小堆我建好了，我们只需要遍历这些数据，当遍历到的数据大于堆顶的数据(堆里最小的),那么我们让堆顶数据等于遍历到的
+
+数据
+
+3.每次堆顶数据改变，我们都得进行一次向下调整.
+
+void _AdjustDown(int* heap, int k, size_t parent)
+{
+	size_t child = parent * 2 + 1;
+	while (child < k)
+	{
+		if (child + 1 < k && (heap[child + 1] < heap[child]))
+		{
+			++child;
+		}
+		if (heap[parent] > heap[child])
+		{
+			swap(heap[parent], heap[child]);
+			parent = child;
+			child = parent * 2 + 1;
+		}
+		else
+		{
+			break;
+		}
+	}
+}
+ 
+void Topk(int* a, int k, int n)
+{
+	assert(k < n);
+	int* heap = new int[k];
+	for (size_t i = 0; i < k; ++i)
+	{
+		heap[i] = a[i];
+	}
+	//topk建小堆 
+	for (int i = (k - 2) / 2; i>0; --i)
+	{
+		_AdjustDown(heap,k,i);
+	}
+	//然后从头遍历n或者传进来的数组。
+	for (int i = 0; i < n; i++)
+	{
+		if (a[i]>heap[0])
+		{
+			heap[0] = i;
+			_AdjustDown(heap, k, 0);
+		}
+	}
+	cout <<n<<"以内最大的" << k << "个数字分别为:" << " ";
+	for (int i = 0; i < k; i++)
+	{
+		cout << heap[i] << " ";
+	}
+	cout << endl;
+	delete[] heap;
+}
