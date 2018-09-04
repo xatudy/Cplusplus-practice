@@ -1,0 +1,48 @@
+
+
+*1.当底数为0且指数<0时
+*会出现对0求倒数的情况，需进行错误处理，设置一个全局变量；
+*2.判断底数是否等于0
+*由于base为double型，不能直接用==判断
+在double类型数据进行比较操作时，应当编写一个equal函数，不能直接写base==0，因为在计算机内部表示小数（包括float和double型小数）时都有误差。
+
+
+//bool equal(double num1,double num2)
+//{
+//      if((num1-num2>-0.0001)&&(num1-num2<0.0001))
+//            return true;
+//      else
+//           return false;
+//}
+
+或者abs(base)<=1e-15
+
+class Solution {
+public:
+
+    double Power(double base, int exponent) {
+        double reslut=1.0;
+        
+        if(abs(base)<=1e-15)
+        {
+            return 0.0;
+        }
+        if(exponent==0)
+            return 1.0;
+        if(exponent<0)
+        {
+         exponent=-1*exponent;
+         for(int i=1;i<=exponent;++i)
+         {
+             reslut*=base;
+         }
+         return 1.0/reslut;
+        }else{
+            for(int j=1;j<=exponent;++j)
+            {
+               reslut*=base;
+            }
+            return reslut;
+        }
+    }
+};
