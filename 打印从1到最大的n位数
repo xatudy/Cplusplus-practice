@@ -1,0 +1,76 @@
+//注意此出没有给定n范围 当输入的n很大时有可能最大的n位数会溢出 就是超过了int或者long long的范围
+
+
+//针对这类问题一般用数据解决，要么是字符数组要么是数值数组。由于是整数，在这里我是用了数值数组。
+
+
+#include<iostream>
+using namespace std;
+void print(int *number, int n)
+{
+	int flag = 0;
+	for (int i = 0; i < n ; ++i)
+	{
+		if (number[i] == 0 && flag == 0)
+		{
+			continue;
+		}
+		else
+		{
+			flag = 1;
+			cout << number[i];
+		}
+	}
+	cout << '\t';
+}
+ 
+ 
+void toMaxNumber(int n)
+{
+	int *number = new int[n];//用于存放我们的数据
+	//for (int i = 0; i < n; ++i)
+	//{
+		//number[i] = 0;
+	//}
+  memset(number,0,sizeof(int)*n);
+	bool increament = false;//进位标记
+	bool overflowFlag = false;//溢出标记
+ 
+	while (true)
+	{
+		increament = true;
+		for (int i = n - 1; i >= 0 && increament; --i)//每次都从最后一位开始，在最后一位加1
+		{
+			increament = false;
+			number[i] += 1;
+			if (number[i] >= 10)//说明需要进位
+			{
+				increament = true;
+				number[i] = 0;
+				if (i == 0 && number[i] == 0)//说明溢出
+				{
+					overflowFlag = true;//溢出
+					break;
+				}
+			}
+			else//不用进位
+			{
+				print(number, n);
+				break;
+			}
+		}
+		if (overflowFlag)
+		{
+			break;
+		}
+	}
+	delete[]number;
+}
+ 
+int main()
+{
+	int n;
+	cin >> n;
+	toMaxNumber(n);
+	return 0;
+}
